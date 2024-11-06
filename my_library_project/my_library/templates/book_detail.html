@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="book-detail">
+    <div class="allocated_block"><h2>{{ book.title }}</h2></div>
+    <p><strong>Автор:</strong> {{ book.author.name }}</p>
+    
+    <!-- Блок короткої біографії -->
+    <div class="author-biography">
+        <h3>Коротка біографія автора:</h3>
+        <p>{{ book.author.biography }}</p>
+    </div>
+    
+    <h3><strong>Опис:</h3>
+    <p>{{ book.description }}</p>
+    <p><strong>Дата публікації:</strong> {{ book.publication_date }}</p>
+    {% if user.is_authenticated %}
+    <p>
+        <div style="float: right;">
+            <form method="post" action="{% url 'save_book' book.id %}">
+                {% csrf_token %}
+                <button type="submit">Зберегти у вибране</button>
+            </form>
+        </div>
+    </p>
+    <p><strong>Завантажити книжку:</strong> <button onclick="window.location.href='{{ book.file.url }}';"    download>Завантажити</button></p>
+    
+    <form method="post" action="{% url 'add_review' book.id %}">
+        {% csrf_token %}
+        <label for="rating">Оцінка:</label>
+        <select name="rating" id="rating" required>
+            <option value="">Виберіть оцінку</option>
+            {% for i in "12345" %}
+                <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <p><label for="comment">Коментар:</label></p>
+        <textarea name="comment" id="comment" rows="4"></textarea>
+        <br>
+        <button type="submit">Відправити відгук</button>
+    </form>
+
+    {% else %}
+        <p class="error">Ви не зареєстровані. Будь ласка, <a href="{% url 'login' %}">увійдіть</a> або <a href="{% url 'register' %}">зареєструйтесь</a>.</p>
+    {% endif %}
+
+    <h3>Відгуки користувачів:</h3>
+    <ul>
+        {% for review in reviews %}
+            <li>
+                <strong>{{ review.user.username }}:</strong>
+                <span>Оцінка: {{ review.rating }}</span><br>
+                <p>{{ review.comment }}</p>
+            </li>
+        {% empty %}
+            <li>Немає відгуків для цієї книги.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

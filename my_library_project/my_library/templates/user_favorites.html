@@ -1,0 +1,40 @@
+<!-- templates/user_favorites.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="book-list">
+    <h2>Вибрані Книги</h2>
+    <p>
+        <form method="get" class="search-bar">
+            <input type="text" name="q" placeholder="Пошук за назвою">
+            <button type="submit">Пошук</button>
+        </form>
+    </p>
+
+
+    <div class="sort-options">
+        <form id="sort-form" method="get">
+            <label for="sort">Сортувати за:</label>
+            <select id="sort" name="sort">
+                <option value="">Вибрати...</option>
+                <option value="title_asc" {% if request.GET.sort == 'title_asc' %}selected{% endif %}>Назвою (А-Я)</option>
+                <option value="title_desc" {% if request.GET.sort == 'title_desc' %}selected{% endif %}>Назвою (Я-А)</option>
+                <option value="author_asc" {% if request.GET.sort == 'author_asc' %}selected{% endif %}>Автором (А-Я)</option>
+                <option value="author_desc" {% if request.GET.sort == 'author_desc' %}selected{% endif %}>Автором (Я-А)</option>
+            </select>
+            <button type="submit">Сортувати</button>
+        </form>
+    </div>
+    
+    
+    <ul>
+        {% for book in favorites %}
+            <li class="book-item"><a href="{% url 'book_detail' book.id %}"><h3>{{ book.title }}</h3> <p>Автор: {{ book.author.name }}</p></a></li>
+        {% empty %}
+            <li>Немає вибраних книг</li>
+        {% endfor %}
+    </ul>
+    
+</div>
+{% endblock %}

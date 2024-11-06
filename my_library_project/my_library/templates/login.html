@@ -1,0 +1,14 @@
+<!-- templates/login.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Логін</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Увійти</button>
+    </form>
+</div>
+{% endblock %}

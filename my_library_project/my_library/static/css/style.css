@@ -1,0 +1,57 @@
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #1f1f1f;
+    padding: 10px;
+    text-align: center;
+}
+
+header nav a {
+    color: #bb86fc;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+.form-container, .book-list, .book-detail {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1f1f1f;
+    border-radius: 8px;
+}
+
+button {
+    background-color: #bb86fc;
+    color: #121212;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #9a67ea;
+}
+.book-item {
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.book-item:hover {
+    background-color: #333;
+}
+
+.book-list .book-item a {
+    display: block; /* Змінюємо display на block, щоб заповнити весь блок li */
+    color: inherit; /* Спадкуємо колір тексту */
+    text-decoration: none; /* Скидаємо підкреслення */
+}
